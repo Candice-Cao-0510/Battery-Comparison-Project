@@ -17,11 +17,14 @@ class INIT:
 		idn = tempInstrument.query("*IDN?")
 		self.inst._init_(tempInstrument, idn)
 
-	def constant_current(self, targetVoltage):
+	def constant_current(self, constantCurrent, targetVoltage):
+
+		[currentFileName, voltageFileName, timeFileName] = self.createCSVFiles("cc", constantCurrent, targetVoltage)
+		
 		self.inst.reset()
 
 		self.inst.setCurrentRange('1')
-		self.inst.setCurrent('0.1')
+		self.inst.setCurrent(str(constantCurrent))
 
 		#initialize time to be 0 second
 		timeInSec = 0
@@ -31,7 +34,7 @@ class INIT:
 		currentReading = float(self.inst.getCurrent())
 
 		#the intrument starts to drain the battery in a constant current
-		self.inst.inputOn()
+		self.inst.inputOff()
 
 		#let the thread sleep for 1 second to avoid rushing to append initialized data into the arrays
 		time.sleep(1)
@@ -62,6 +65,33 @@ class INIT:
 		print(self.currentChangeData)
 
 
+	def createCSVFiles(self, mode, constantValue, changingVariableTarget):
+
+		constant = ""
+		target = ""
+
+		if (mode == "cc"):
+			constant = ("%sA" % str(constantValue))
+			target= ("%sV" % str(changingVariableTarget))
+		elif (mode == "cr"):
+			constant = ("%sR" % str(constantValue))
+			target= ("%sV" % str(changingVariableTarget))
+		elif (mode == "cp"):
+			constant = ("%sW" % str(constantValue))
+			target= ("%sV" % str(changingVariableTarget))
+		else:
+			print("undefined mode")
+			return None
+
+		currentFileName = ("data/%s_%s_target%s_current.csv" % (mode, constant, target))
+		voltageFileName = ("data/%s_%s_target%s_voltage.csv" % (mode, constant, target))
+		timeFileName = ("data/%s_%s_target%s_time.csv" % (mode, constant, target))
+		currentFile = open(currentFileName, "w")
+		voltageFile = open(voltageFileName, "w")
+		timeFile = open(timeFileName, "w")
+
+		return [currentFileName, voltageFileName, timeFileName]
+
 bus = INIT()
 bus._init_("bk_precision8600")
-bus.constant_current(7.5)
+bus.constant_current(0.1, 7.5)
