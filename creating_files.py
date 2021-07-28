@@ -41,5 +41,24 @@ def createDBFiles(mode, constantValue, changingVariableTarget):
 		return None
 
 	fileName = ("dbDataFiles/%s_%s_target%s.db" % (mode, constant, target))
-
 	return fileName
+
+def createPNG(mode, constantValue, changingVariableTarget):
+	constant = ""
+	target = ""
+
+	if (mode == "cc"):
+		constant = ("%sA" % str(constantValue))
+		target= ("%sV" % str(changingVariableTarget))
+	elif (mode == "cr"):
+		constant = ("%sR" % str(constantValue))
+		target= ("%sV" % str(changingVariableTarget))
+	elif (mode == "cp"):
+		constant = ("%sW" % str(constantValue))
+		target= ("%sV" % str(changingVariableTarget))
+	else:
+		print("undefined mode")
+		return None
+
+	pngName = ("plot_screenshots/%s_%s_target%s.png" % (mode, constant, target))
+	return pngName

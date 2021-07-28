@@ -93,3 +93,7 @@ class BKP8600:
 	#get current power
 	def getPower(self):
 		return(self.inst.query('power?'))
+
+	def getOPC(self):
+		return self.inst.query("*OPC?")
+		
