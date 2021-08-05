@@ -9,7 +9,7 @@ import seaborn as sns
 
 from creating_files import createCSVFiles, createDBFiles
 from bk_precision8600 import BKP8600
-from cc_real_time_plot import CC_Plot
+from cc_read_store_display_data import CC_Plot
 
 class INIT:
 	def _init_(self, device_name=None):
@@ -34,4 +34,4 @@ class INIT:
 
 bus = INIT()
 bus._init_("bk_precision8600")
-bus.constant_current(0.01, 7.0)
+bus.constant_current(0.05, 4.5)
