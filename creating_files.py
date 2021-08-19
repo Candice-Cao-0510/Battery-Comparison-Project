@@ -1,64 +1,23 @@
-def createCSVFiles(mode, constantValue, changingVariableTarget):
-	constant = ""
-	target = ""
+"""
+Written by Candice Cao
 
-	if (mode == "cc"):
-		constant = ("%sA" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	elif (mode == "cr"):
-		constant = ("%sR" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	elif (mode == "cp"):
-		constant = ("%sW" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	else:
-		print("undefined mode")
-		return None
+This module has all functions that create different types of files
+"""
 
-	currentFileName = ("csvDataFiles/%s_%s_target%s_current.csv" % (mode, constant, target))
-	voltageFileName = ("csvDataFiles/%s_%s_target%s_voltage.csv" % (mode, constant, target))
-	timeFileName = ("csvDataFiles/%s_%s_target%s_time.csv" % (mode, constant, target))
-	"""currentFile = open(currentFileName, "w")
-	voltageFile = open(voltageFileName, "w")
-	timeFile = open(timeFileName, "w")"""
-	return [currentFileName, voltageFileName, timeFileName]
+import os
+cwd = os.path.abspath(os.getcwd())
 
-def createDBFiles(mode, constantValue, changingVariableTarget):
-	constant = ""
-	target = ""
+def create_csv_files(date_time, df):
+    """ creates csv files """
+    file_name = ('csvDataFiles/%s.csv' % date_time)
+    df.to_csv(file_name, index_label="Index")
 
-	if (mode == "cc"):
-		constant = ("%sA" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	elif (mode == "cr"):
-		constant = ("%sR" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	elif (mode == "cp"):
-		constant = ("%sW" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	else:
-		print("undefined mode")
-		return None
+def create_db_files(date_time):
+    """ creates db files """
+    file_name = ("dbDataFiles/%s.db" % (date_time))
+    return file_name
 
-	fileName = ("dbDataFiles/%s_%s_target%s.db" % (mode, constant, target))
-	return fileName
-
-def createPNG(mode, constantValue, changingVariableTarget):
-	constant = ""
-	target = ""
-
-	if (mode == "cc"):
-		constant = ("%sA" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	elif (mode == "cr"):
-		constant = ("%sR" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	elif (mode == "cp"):
-		constant = ("%sW" % str(constantValue))
-		target= ("%sV" % str(changingVariableTarget))
-	else:
-		print("undefined mode")
-		return None
-
-	pngName = ("plot_screenshots/%s_%s_target%s.png" % (mode, constant, target))
-	return pngName
+def create_png(date_time):
+    """ creates png """
+    png_name = ("%s/plot_screenshots/%s.png" % (cwd, date_time))
+    return png_name
