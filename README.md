@@ -4,7 +4,7 @@ This eecs project uses python to control BK Precision 8600 DC Electronic Load, a
 
 ## Project Setup:
 
-download the project package to local
+-->     Download the project package to local
 
 -->     Open terminal 
 
